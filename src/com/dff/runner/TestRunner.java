@@ -9,7 +9,7 @@ import com.dff.core.FilesFinderFactory;
 
 public class TestRunner {
 	public static void main(String... args) {
-		String rootPath = "D:/dev/file app testing";
+		String rootPath = "D:/Music/2015";
 		FilesFinderFactory ffFactory = new FilesFinderFactory();
 		FilesFinder ff = ffFactory.createFilesFinder(rootPath);
 		if (ff != null) {

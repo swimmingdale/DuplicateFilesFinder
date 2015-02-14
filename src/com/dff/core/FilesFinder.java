@@ -17,8 +17,7 @@ public class FilesFinder {
 	private String rootFilePath;
 	private File rootFile;
 
-	public FilesFinder(String rootFilePath) throws FileNotFoundException,
-			NotDirectoryException {
+	public FilesFinder(String rootFilePath) throws FileNotFoundException, NotDirectoryException {
 		this.rootFilePath = rootFilePath;
 		rootFile = new File(rootFilePath);
 		if (!rootFile.exists()) {
@@ -81,12 +80,9 @@ public class FilesFinder {
 			try {
 				int lastDotIndex = file.getName().lastIndexOf(".");
 				String fileNameOnly = file.getName().substring(0, lastDotIndex);
-				String removedNonAlphanumeric = fileNameOnly.replaceAll("\\W+",
-						" ");
-				removedNonAlphanumeric = removedNonAlphanumeric.replaceAll("_",
-						" ");
-				removedNonAlphanumeric = removedNonAlphanumeric.replaceAll("-",
-						" ");
+				String removedNonAlphanumeric = fileNameOnly.replaceAll("\\W+", " ");
+				removedNonAlphanumeric = removedNonAlphanumeric.replaceAll("_", " ");
+				removedNonAlphanumeric = removedNonAlphanumeric.replaceAll("-", " ");
 				removedNonAlphanumeric = removedNonAlphanumeric.toLowerCase();
 				String[] tagsArray = removedNonAlphanumeric.split("\\s+");
 				List<String> tagsList = Arrays.asList(tagsArray);
