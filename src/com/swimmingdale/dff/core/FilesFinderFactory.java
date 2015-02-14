@@ -1,4 +1,4 @@
-package com.dff.core;
+package com.swimmingdale.dff.core;
 
 import java.io.FileNotFoundException;
 import java.nio.file.NotDirectoryException;

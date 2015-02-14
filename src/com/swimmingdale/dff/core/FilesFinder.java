@@ -1,4 +1,4 @@
-package com.dff.core;
+package com.swimmingdale.dff.core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,24 +14,24 @@ public class FilesFinder {
 	private Map<Long, List<File>> allFilesSizeMap;
 	private Map<File, List<String>> allFilesTagsMap;
 	private List<File> allFiles;
-	private String rootFilePath;
-	private File rootFile;
+	private String rootDirPath;
+	private File rootDir;
 
-	public FilesFinder(String rootFilePath) throws FileNotFoundException, NotDirectoryException {
-		this.rootFilePath = rootFilePath;
-		rootFile = new File(rootFilePath);
-		if (!rootFile.exists()) {
+	public FilesFinder(String rootDirPath) throws FileNotFoundException, NotDirectoryException {
+		this.rootDirPath = rootDirPath;
+		rootDir = new File(rootDirPath);
+		if (!rootDir.exists()) {
 			throw new FileNotFoundException();
 		}
-		if (!rootFile.isDirectory()) {
-			throw new NotDirectoryException(rootFilePath);
+		if (!rootDir.isDirectory()) {
+			throw new NotDirectoryException(rootDirPath);
 		}
 
 	}
 
 	private List<File> getAllFilesInDirectoryAndSubdirectories() {
 		if (allFiles == null) {
-			allFiles = collectAllFiles(rootFile);
+			allFiles = collectAllFiles(rootDir);
 		}
 		return allFiles;
 	}
@@ -39,11 +39,13 @@ public class FilesFinder {
 	private List<File> collectAllFiles(File rootDir) {
 		List<File> allFiles = new ArrayList<File>();
 		File[] subFiles = rootDir.listFiles();
-		for (File file : subFiles) {
-			if (file.isDirectory()) {
-				allFiles.addAll(collectAllFiles(file));
-			} else {
-				allFiles.add(file);
+		if (subFiles != null && subFiles.length != 0) {
+			for (File file : subFiles) {
+				if (file.isDirectory()) {
+					allFiles.addAll(collectAllFiles(file));
+				} else {
+					allFiles.add(file);
+				}
 			}
 		}
 		return allFiles;
@@ -118,7 +120,6 @@ public class FilesFinder {
 						}
 					}
 					if (thisFileWasSimilar) {
-						allFilesTagsMap.remove(key2);
 						commonFilesInTuples.add(similarFilesTuple);
 					}
 				}
@@ -127,9 +128,20 @@ public class FilesFinder {
 		return commonFilesInTuples;
 	}
 
+	public int getAllFilesNumber(){
+		return allFiles.size();
+	}
+	
 	private boolean haveSimilarTags(List<String> first, List<String> second) {
 		int similar = 0;
-
+		for(String tagFirst : first) {
+			for(String tagSecond : second) {
+				if(tagFirst.equalsIgnoreCase(tagSecond)){
+					similar++;
+					break;
+				}
+			}
+		}
 		if (similar >= 2) {
 			return true;
 		} else {

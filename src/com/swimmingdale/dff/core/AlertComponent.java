@@ -1,4 +1,4 @@
-package com.dff.core;
+package com.swimmingdale.dff.core;
 
 public class AlertComponent {
 	public static void alertError(String alert) {
