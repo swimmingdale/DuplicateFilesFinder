@@ -1,7 +1,6 @@
 package com.swimmingdale.dff.runner;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,11 +17,10 @@ public class TestRunner {
 			for(Long key : allFilesMap.keySet()) {
 				if(allFilesMap.get(key).size() > 1) {
 					System.out.println(allFilesMap.get(key).toString());
+					//System.out.println(allFilesMap.get(key).size());
 				}
 			}
 			System.out.println("Total number of files: " + ff.getAllFilesNumber());
-			ArrayList<ArrayList<File>> commonFilesInTuples = ff.getCommonFilesInTuples();
-			System.out.println(commonFilesInTuples);
 		}
 	}
 }
