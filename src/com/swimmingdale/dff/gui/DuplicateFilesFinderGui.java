@@ -210,22 +210,46 @@ public class DuplicateFilesFinderGui {
 	private void performDelete() {
 		List<JCheckBox> checkboxesList = getCheckboxes();
 		List<File> filesForDeletion = new ArrayList<File>();
+		long deletedFilesSizeBytes = 0l;
 		for (JCheckBox checkBox : checkboxesList) {
 			if (checkBox.isSelected()) {
 				File file = new File(checkBox.getText());
 				filesForDeletion.add(file);
+				long fileSize = file.length();
 				try {
 					Executor.deleteFile(file);
 					filesForDeletion.remove(file);
+					deletedFilesSizeBytes += fileSize;
 				} catch (IOException e) {
 
 				}
 
 			}
 		}
+		showDeletionResults(deletedFilesSizeBytes);
 	}
 
-	private void showNonDeletedFilesFrame(List<File> files) {
-		
+	private void showDeletionResults(long deletedBytes) {
+		System.out.println(stringDeletedSize(deletedBytes));
+	}
+
+	private String stringDeletedSize(long deletedBytes) {
+		long kb = 1024;
+		long mb = 1048576;
+		long gb = 1073741824;
+		StringBuilder stringSize = new StringBuilder();
+		stringSize.append("You saved up ");
+		if (deletedBytes > kb && deletedBytes < mb) {
+			stringSize.append(deletedBytes / kb);
+			stringSize.append(" kbs.");
+		} else if(deletedBytes >= mb && deletedBytes < gb) {
+			stringSize.append(deletedBytes / mb);
+			stringSize.append(" mbs.");
+		} else {
+			stringSize.append(deletedBytes / gb);
+			stringSize.append(" gbs");
+		}
+		stringSize.append(" from your hard drive");
+		return stringSize.toString();
 	}
 }
