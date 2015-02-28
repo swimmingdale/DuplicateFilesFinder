@@ -20,6 +20,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -27,6 +28,7 @@ import javax.swing.JTextField;
 
 import com.swimmingdale.dff.core.FilesFinder;
 import com.swimmingdale.dff.core.FilesFinderFactory;
+import com.swimmingdale.dff.core.Utils;
 import com.swimmingdale.dff.executor.Executor;
 
 public class DuplicateFilesFinderGui {
@@ -230,26 +232,9 @@ public class DuplicateFilesFinderGui {
 	}
 
 	private void showDeletionResults(long deletedBytes) {
-		System.out.println(stringDeletedSize(deletedBytes));
-	}
-
-	private String stringDeletedSize(long deletedBytes) {
-		long kb = 1024;
-		long mb = 1048576;
-		long gb = 1073741824;
-		StringBuilder stringSize = new StringBuilder();
-		stringSize.append("You saved up ");
-		if (deletedBytes > kb && deletedBytes < mb) {
-			stringSize.append(deletedBytes / kb);
-			stringSize.append(" kbs.");
-		} else if(deletedBytes >= mb && deletedBytes < gb) {
-			stringSize.append(deletedBytes / mb);
-			stringSize.append(" mbs.");
-		} else {
-			stringSize.append(deletedBytes / gb);
-			stringSize.append(" gbs");
-		}
-		stringSize.append(" from your hard drive");
-		return stringSize.toString();
+		String title = deletedBytes > 0 ? "Deletion complete": "No files were deleted";
+		JOptionPane.showMessageDialog(mainFrame,
+				Utils.getMessageDeletedSize(deletedBytes), title,
+				JOptionPane.PLAIN_MESSAGE);
 	}
 }
